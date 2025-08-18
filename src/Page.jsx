@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import {
   Box,
@@ -10,9 +9,14 @@ import {
   MenuItem,
   Button,
 } from "@mui/material";
-
+import { BarChart } from "@mui/x-charts/BarChart";
 const styles = {
-  Page: { padding: "2rem", backgroundColor: "#f9f9f9", minHeight: "100vh",fontFamily:"'Nunito', sans-serif" },
+  Page: {
+    padding: "2rem",
+    backgroundColor: "#f9f9f9",
+    minHeight: "100vh",
+    fontFamily: "'Nunito', sans-serif",
+  },
   Header: { textAlign: "center", marginBottom: "2rem" },
   HeaderText: { fontSize: "2rem", fontWeight: "bold" },
 };
@@ -42,7 +46,7 @@ const Page = () => {
   const handleCalculateGPA = () => {
     let totalPoints = 0;
     let totalSubjects = 0;
-
+    console.log(marks);
     marks.forEach((mark) => {
       if (mark.grade) {
         const gradeValue = grades.find(
@@ -120,14 +124,21 @@ const Page = () => {
           Calculate GPA
         </Button>
       </Grid>
-       <Grid container justifyContent="center" sx={{ marginTop: "30px" }}>
-        
-        { showGradePoint && <Box>
-        <Typography variant="h6">
-          Total GPA: {totalMarks ? totalMarks : "0.00"}
-        </Typography>
-        </Box> }
+      <Grid container justifyContent="center" sx={{ marginTop: "30px" }}>
+        {showGradePoint && (
+          <Box>
+            <Typography variant="h6">
+              Total GPA: {totalMarks ? totalMarks : "0.00"}
+            </Typography>
+          </Box>
+        )}
       </Grid>
+      <BarChart
+        xAxis={[{ data: marks.map((mark) => mark.subject) }]}
+        series={[{ data: marks.map((mark) => mark.grade) }]}
+        width={400}
+        height={300}
+      />
     </Box>
   );
 };
